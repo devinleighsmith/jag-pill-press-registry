@@ -88,11 +88,20 @@ namespace Gov.Jag.PillPressRegistry.Public.ViewModels
 
     }
 
+    public enum PrivateDwellingOptions
+    {
+        Yes = 931490000,
+        No,
+        Unkwown
+    }
+
     public class Application
     {
         public string id { get; set; } //adoxio_applicationid
 
         public string title { get; set; }
+
+        public DateTimeOffset? Createdon { get; set; }
 
         /// <summary>
         /// The related business
@@ -457,27 +466,29 @@ namespace Gov.Jag.PillPressRegistry.Public.ViewModels
         public string circumstancesOfStolenEquipment { get; set; }
         public string circumstancesOfDestroyedEquipment { get; set; }
         public string whoDestroyedEquipment { get; set; }
-        public ViewModels.CustomAddress addressWhereEquipmentWasDestroyed { get; set; }
+        public ViewModels.CustomAddress AddressWhereEquipmentWasDestroyed { get; set; }
 
 
         // reporting sales
-        public DateTime? dateOfSale { get; set; }
+        public DateTimeOffset? dateOfSale { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public TypeOfSale? typeOfSale { get; set; }
         public string typeOfSaleOther { get; set; }
         public bool? rightsToOwnuseOrPossessRetained { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
         public MethodOfPayment? methodOfPayment { get; set; }
         public string methodOfPaymentOther { get; set; }
         public bool? whereWillEquipmentReside { get; set; }
         public CustomAddress civicAddressOfPurchaser { get; set; }
-        public int? privateDwelling { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public PrivateDwellingOptions? privateDwelling { get; set; }
         public bool? purchasedByIndividualOrBusiness { get; set; }
         public string legalNameOfPurchaserIndividual { get; set; }
         public CustomAddress purchasersCivicAddress { get; set; }
         public string purchasersTelephoneNumber { get; set; }
         public string purchasersEmailAddress { get; set; }
-        public string idNumberCollected { get; set; }
+        public bool? idNumberCollected { get; set; }
         public string typeOfIdNumberCollected { get; set; }
         public string nameOfPurchaserBusiness { get; set; }
         public string purchaserRegistrationNumber { get; set; }
@@ -486,7 +497,9 @@ namespace Gov.Jag.PillPressRegistry.Public.ViewModels
         public string legalNameOfPersonResponsibleForBusiness { get; set; }
         public string phoneNumberOfPersonResponsibleForBusiness { get; set; }
         public string emailOfPersonResponsibleForBusiness { get; set; }
-        public int? geographicalLocationOfBusinessPurchaser { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public GeographicalLocation? geographicalLocationOfBusinessPurchaser { get; set; }
         public bool? isPurchaserAPersonOfBC { get; set; }
         public bool? howIsPurchaseAuthorizedAO { get; set; }
         public bool? howIsPurchaserAuthorizedWaiver { get; set; }
@@ -496,8 +509,10 @@ namespace Gov.Jag.PillPressRegistry.Public.ViewModels
         public bool? healthCanadaLicenseSiteLicense { get; set; }
         public string nameOnPurchasersDEL { get; set; }
         public string purchasersDELNumber { get; set; }
+        public string PurchasersSiteLicenseNumber { get; set; }
         public string nameOnPurchasersSiteLicense { get; set; }
-        public string purchasersSiteLicenseExpiryDate { get; set; }
+        public DateTimeOffset? PurchasersSiteLicenseExpiryDate { get; set; }
+        public DateTimeOffset? PurchasersDELExpiryDate { get; set; }
         public string purchasersWaiverNumber { get; set; }
         public string purchasersRegistrationNumber { get; set; }
         public Equipment EquipmentRecord { get; set; }

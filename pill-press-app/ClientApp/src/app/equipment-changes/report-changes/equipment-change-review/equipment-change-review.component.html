@@ -7,7 +7,7 @@
     <p>
       You have provided the following information in your Waiver application. In order to proceed, please confirm that
       these details are correct. If they are not, please <a
-        routerLink="/equipment-notification/reporting-changes/details/{{applicationId}}">amend
+        routerLink="/equipment-changes/reporting-changes/details/{{applicationId}}">amend
         your
         answers</a>
       before submitting the application.
@@ -15,32 +15,28 @@
 
     <h2>Equipment Identification</h2>
     <div>
-      <section *ngIf="application?.equipmentRecord?.howWasEquipmentBuilt === 'Commercially Manufactured'" class="padded-section">
-        <div class="dark-row">Equipment Type&nbsp; <span class="error-states">*</span></div>
-        <div class="alt-row"> {{ application?.equipmenRecord?.equipmentType }}</div>
+      <div class="dark-row"> <strong>Equipment Type</strong>&nbsp; <span class="error-states">*</span></div>
+      <div class="alt-row"> {{ application?.equipmentRecord?.equipmentType }}</div>
 
-        <div class="dark-row">Make <span class="error-states">*</span></div>
-        <div class="alt-row"> {{ application?.equipmenRecord?.equipmentMake }}</div>
+      <section *ngIf="application?.equipmentRecord?.howWasEquipmentBuilt === 'Commercially Manufactured'">
+        <div class="dark-row"><strong>Make</strong> <span class="error-states">*</span></div>
+        <div class="alt-row"> {{ application?.equipmentRecord?.equipmentMake }}</div>
 
-        <div class="dark-row">Model</div>
-        <div class="alt-row"> {{ application?.equipmenRecord?.equipmentModel }}</div>
+        <div class="dark-row"><strong>Model</strong></div>
+        <div class="alt-row"> {{ application?.equipmentRecord?.equipmentModel }}</div>
 
-        <div class="dark-row">Serial Number</div>
-        <div class="alt-row"> {{ application?.equipmenRecord?.serialNumber }}</div>
-
-        <div class="dark-row">Equipment Resitry Number</div>
-        <div class="alt-row"> {{ application?.equipmenRecord?.certificate?.name }}</div>
+        <div class="dark-row"><strong>Serial Number</strong></div>
+        <div class="alt-row"> {{ application?.equipmentRecord?.serialNumber }}</div>
       </section>
 
-      <section *ngIf="application?.equipmentRecord?.howWasEquipmentBuilt !== 'Commercially Manufactured'" class="padded-section">
-        <div class="dark-row">Equipment Type&nbsp; <span class="error-states">*</span></div>
-        <div class="alt-row"> {{ application?.equipmenRecord?.equipmentType }}</div>
-
-        <div class="dark-row">Equipment Resitry Number</div>
-        <div class="alt-row"> {{ application?.equipmenRecord?.certificate?.name }}</div>
+      <section *ngIf="application?.equipmentRecord?.customBuiltSerialNumber">
+        <div class="dark-row"><strong>Equipment Registry Number</strong>&nbsp; <span class="error-states">*</span></div>
+        <div class="alt-row"> {{ application?.equipmentRecord?.customBuiltSerialNumber }}</div>
       </section>
+
+      <div class="dark-row"><strong>Equipment Resitry Number</strong></div>
+      <div class="alt-row"> {{ application?.equipmentRecord?.name }}</div>
     </div>
-
 
     <h2>Details of Equipment Change</h2>
     <div class="padded-section">
@@ -54,7 +50,7 @@
       <section *ngIf="application?.typeOfChange === 'Lost'" class="padded-section">
         <div class="dark-row">What was the date on which this piece of equipment was lost? &nbsp; <span
             class="error-states">*</span></div>
-        <div class="alt-row"> {{ application?.dateOfEquipmentChange }}</div>
+        <div class="alt-row"> {{ application?.dateOfEquipmentChange | date:'MM-dd-yyyy' }}</div>
 
         <div class="dark-row">Describe the circumstances under which this piece of equipment was lost? &nbsp;
           <span class="error-states">*</span></div>
@@ -67,7 +63,7 @@
         <section *ngIf="application?.policeNotified" class="padded-section">
           <div class="dark-row">On what date did you report the loss to police? &nbsp; <span
               class="error-states">*</span></div>
-          <div class="alt-row"> {{ application?.policeReportDate }}</div>
+          <div class="alt-row"> {{ application?.policeReportDate | date:'MM-dd-yyyy' }}</div>
 
           <div class="dark-row">What is the police file number? &nbsp; <span class="error-states">*</span></div>
           <div class="alt-row"> {{ application?.policeFileNumber }}</div>
@@ -82,7 +78,7 @@
       <section *ngIf="application?.typeOfChange === 'Stolen'" class="padded-section">
         <div class="dark-row">What was the date on which this piece of equipment was stolen? &nbsp; <span
             class="error-states">*</span></div>
-        <div class="alt-row"> {{ application?.dateOfEquipmentChange }}</div>
+        <div class="alt-row"> {{ application?.dateOfEquipmentChange | date:'MM-dd-yyyy' }}</div>
 
         <div class="dark-row">Describe the circumstances under which this piece of equipment was stolen? &nbsp;
           <span class="error-states">*</span></div>
@@ -95,7 +91,7 @@
         <section *ngIf="application?.policeNotified" class="padded-section">
           <div class="dark-row">On what date did you report the theft to police? &nbsp; <span
               class="error-states">*</span></div>
-          <div class="alt-row"> {{ application?.policeReportDate }}</div>
+          <div class="alt-row"> {{ application?.policeReportDate | date:'MM-dd-yyyy' }}</div>
 
           <div class="dark-row">What is the police file number? &nbsp; <span class="error-states">*</span></div>
           <div class="alt-row"> {{ application?.policeFileNumber }}</div>
@@ -110,7 +106,7 @@
       <section *ngIf="application?.typeOfChange === 'Destroyed'" class="padded-section">
         <div class="dark-row">What was the date on which this piece of equipment was destroyed? &nbsp; <span
             class="error-states">*</span></div>
-        <div class="alt-row"> {{ application?.dateOfEquipmentChange }}</div>
+        <div class="alt-row"> {{ application?.dateOfEquipmentChange | date:'MM-dd-yyyy' }}</div>
 
         <div class="dark-row">Describe the circumstances under which this piece of equipment was destroyed? &nbsp;
           <span class="error-states">*</span></div>
@@ -148,8 +144,7 @@
         </span>
       </section>
 
-      <div
-        *ngIf="(form.get('declarationOfCorrectInformation').value !== true || form.get('confirmationOfAuthorizedUse').value !== true) && showErrors"
+      <div *ngIf="form.get('declarationOfCorrectInformation').value !== true && showErrors"
         style="background-color: #F2F2F2; margin-top: 10px; border-radius: 5px; padding: 10px; font: 15px Myriad Pro Regular #494949;">
         <fa-icon [icon]="faExclamationTriangle" class="error-states" style="margin-right: 10px;"></fa-icon>
         <span class="error-states">Please complete the declarations and consent section.</span>
@@ -173,7 +168,7 @@
       </section>
       <section>
         <button class="btn btn-secondary" style="margin-right: 15px"
-          routerLink="/equipment-notification/reporting-changes/details/{{applicationId}}">EDIT
+          routerLink="/equipment-changes/reporting-changes/details/{{applicationId}}">EDIT
           APPLICATION</button>
 
         <button class="btn btn-primary" (click)="save(true)">SUBMIT</button>
